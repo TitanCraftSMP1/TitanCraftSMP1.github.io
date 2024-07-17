@@ -50,4 +50,61 @@ function is_logged_in() {
 function logout_user() {
     session_destroy();
 }
+
+function get_last_attempt_time($username) {
+    $attempts = [];
+    if (file_exists('results.txt')) {
+        $file = fopen('results.txt', 'r');
+        while (($line = fgets($file)) !== false) {
+            list($user, $timestamp, $attempts_count) = explode(':', trim($line));
+            $attempts[$user] = ['timestamp' => $timestamp, 'attempts_count' => $attempts_count];
+        }
+        fclose($file);
+    }
+    return isset($attempts[$username]) ? $attempts[$username] : null;
+}
+
+function save_attempt($username, $timestamp, $attempts_count) {
+    $attempts = [];
+    if (file_exists('results.txt')) {
+        $file = fopen('results.txt', 'r');
+        while (($line = fgets($file)) !== false) {
+            list($user, $time, $count) = explode(':', trim($line));
+            $attempts[$user] = ['timestamp' => $time, 'attempts_count' => $count];
+        }
+        fclose($file);
+    }
+    $attempts[$username] = ['timestamp' => $timestamp, 'attempts_count' => $attempts_count];
+
+    $file = fopen('results.txt', 'w');
+    foreach ($attempts as $user => $data) {
+        fwrite($file, "$user:{$data['timestamp']}:{$data['attempts_count']}\n");
+    }
+    fclose($file);
+}
+
+function can_attempt_quiz($username) {
+    $attempt_data = get_last_attempt_time($username);
+    if ($attempt_data) {
+        $last_attempt_time = $attempt_data['timestamp'];
+        $attempts_count = $attempt_data['attempts_count'];
+        $wait_time = 3600 + ($attempts_count - 1) * 300; // 1 hour + 5 minutes for each failed attempt
+        if (time() - $last_attempt_time < $wait_time) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function record_failed_attempt($username) {
+    $attempt_data = get_last_attempt_time($username);
+    $attempts_count = $attempt_data ? $attempt_data['attempts_count'] + 1 : 1;
+    save_attempt($username, time(), $attempts_count);
+}
+
+function send_email($to, $subject, $message) {
+    // Beispiel: Email senden mit PHP mail()
+    $headers = "From: no-reply@titancraft-smp.com";
+    mail($to, $subject, $message, $headers);
+}
 ?>
