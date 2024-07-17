@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Supporter zu Supporter Quiz - TitanCraft SMP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>T-Supporter zu Supporter Quiz</h1>
+    </header>
+    <main>
+        <form id="quizForm">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="question">
+                <p>1. Was würdest du tun, wenn jemand im MC Chat beleidigt?</p>
+                <label><input type="radio" name="question1" value="A" required> A: Muten</label><br>
+                <label><input type="radio" name="question1" value="B"> B: Verwarnen</label><br>
+                <label><input type="radio" name="question1" value="C"> C: Bannen</label>
+            </div>
+            <div class="question">
+                <p>2. Was machst du, wenn jemand hackt?</p>
+                <label><input type="radio" name="question2" value="A" required> A: Verwarnen</label><br>
+                <label><input type="radio" name="question2" value="B"> B: Bannen</label><br>
+                <label><input type="radio" name="question2" value="C"> C: Bannen und den Inhaber melden</label>
+            </div>
+            <div class="question">
+                <p>3. Was machst du bei einer Bewerbung?</p>
+                <label><input type="radio" name="question3" value="A" required> A: Nichts</label><br>
+                <label><input type="radio" name="question3" value="B"> B: Inhaber Bescheid geben</label><br>
+                <label><input type="radio" name="question3" value="C"> C: Ein Moderator anpingen</label>
+            </div>
+            <div class="question">
+                <p>4. Was machst du bei Spammen?</p>
+                <label><input type="radio" name="question4" value="A" required> A: Inhaber Bescheid geben</label><br>
+                <label><input type="radio" name="question4" value="B"> B: Muten</label><br>
+                <label><input type="radio" name="question4" value="C"> C: Kicken</label>
+            </div>
+            <button type="submit">Quiz abschließen</button>
+        </form>
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>
