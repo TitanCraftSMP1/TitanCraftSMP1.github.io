@@ -11,7 +11,50 @@
         <h1>T-Supporter zu Supporter Quiz</h1>
     </header>
     <main>
-        <form id="quizForm">
+        <?php
+        // Prüfen, ob das Formular abgesendet wurde
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Überprüfen der Quiz-Antworten
+            $answers = [
+                'question1' => 'A',
+                'question2' => 'C',
+                'question3' => 'B',
+                'question4' => 'B'
+            ];
+
+            $score = 0;
+            $userAnswers = [];
+
+            // Prüfen der Antworten
+            foreach ($answers as $question => $correctAnswer) {
+                if (isset($_POST[$question])) {
+                    $userAnswer = $_POST[$question];
+                    $userAnswers[$question] = $userAnswer;
+
+                    if ($userAnswer == $correctAnswer) {
+                        $score++;
+                    }
+                }
+            }
+
+            $MAX_ATTEMPTS = 3; // Maximale Anzahl an Fehlversuchen
+            $BASE_WAIT_TIME = 3600; // 1 Stunde in Sekunden
+            $additionalTime = ($MAX_ATTEMPTS - $score) * 300; // Zusätzliche 5 Minuten pro Fehlversuch in Sekunden
+
+            if ($score == 4) {
+                // Quiz bestanden
+                echo '<p>Glückwunsch! Du hast das Quiz bestanden.</p>';
+                // Hier können Sie den Code für den E-Mail-Versand einfügen
+            } else {
+                // Quiz nicht bestanden, Wartezeit berechnen
+                $waitTime = $BASE_WAIT_TIME + $additionalTime;
+                echo '<p>Leider hast du das Quiz nicht bestanden. Bitte warte, bevor du es erneut versuchst.</p>';
+                echo '<p>Wartezeit: ' . gmdate("H:i:s", $waitTime) . '</p>';
+            }
+        }
+        ?>
+
+        <form method="post">
             <div>
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -42,75 +85,6 @@
             </div>
             <button type="submit">Quiz abschließen</button>
         </form>
-        <p id="quizMessage"></p>
     </main>
-    <script src="scripts.js"></script>
-    <script>
-        // JavaScript für die Quiz-Wartezeit
-        const quizForm = document.getElementById('quizForm');
-        const quizMessage = document.getElementById('quizMessage');
-
-        quizForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const answers = {
-                question1: 'A',
-                question2: 'C',
-                question3: 'B',
-                question4: 'B'
-            };
-
-            let score = 0;
-            const formData = new FormData(event.target);
-            let userAnswers = {};
-
-            for (let [question, answer] of formData.entries()) {
-                if (question !== 'name') {
-                    userAnswers[question] = answer;
-                    if (answer === answers[question]) {
-                        score++;
-                    }
-                }
-            }
-
-            const MAX_ATTEMPTS = 1; // Maximale Anzahl an Fehlversuchen
-            const BASE_WAIT_TIME = 60 * 60 * 1000; // 1 Stunde in Millisekunden
-            const additionalTime = (MAX_ATTEMPTS - score) * 5 * 60 * 1000; // Zusätzliche 5 Minuten pro Fehlversuch
-
-            if (score === 4) {
-                quizMessage.textContent = `Glückwunsch! Du hast das Quiz bestanden.`;
-                sendEmail(formData.get('name'), userAnswers);
-            } else {
-                quizMessage.textContent = `Leider hast du das Quiz nicht bestanden. Versuche es später erneut.`;
-                const waitTime = BASE_WAIT_TIME + additionalTime;
-                setWaitTime(waitTime);
-            }
-
-            // Formular zurücksetzen
-            event.target.reset();
-        });
-
-        function setWaitTime(waitTime) {
-            const endTime = new Date().getTime() + waitTime;
-
-            function updateTimer() {
-                const now = new Date().getTime();
-                const remainingTime = endTime - now;
-
-                if (remainingTime <= 0) {
-                    quizMessage.textContent = ''; // Wartezeit abgelaufen, Nachricht löschen
-                } else {
-                    const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                    quizMessage.textContent = `Bitte warte ${minutes} Minuten und ${seconds} Sekunden, bevor du es erneut versuchst.`;
-                    setTimeout(updateTimer, 1000);
-                }
-            }
-
-            updateTimer();
-        }
-
-
-    </script>
 </body>
 </html>
