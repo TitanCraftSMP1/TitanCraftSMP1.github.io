@@ -9,99 +9,102 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizMessage = document.getElementById('quizMessage');
     const taskSelect = document.getElementById('taskSelect');
     const taskContainer = document.getElementById('taskContainer');
-    
-    const users = {
-        'Team': '5880'
+
+    const correctAnswers = {
+        'tsupporter': {
+            question1: 'A',
+            question2: 'C',
+            question3: 'B',
+            question4: 'B'
+        }
     };
 
-    // Check if the user is already logged in
-    if (localStorage.getItem('loggedInUser')) {
-        showLoggedInView();
+    const loginData = {
+        username: 'Team',
+        password: '5880'
+    };
+
+    function isLoggedIn() {
+        return localStorage.getItem('isLoggedIn') === 'true';
     }
 
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+    function setLoggedIn(value) {
+        localStorage.setItem('isLoggedIn', value ? 'true' : 'false');
+    }
 
-        if (users[username] && users[username] === password) {
-            localStorage.setItem('loggedInUser', username);
-            showLoggedInView();
+    function updateLoginState() {
+        if (isLoggedIn()) {
+            loginForm.style.display = 'none';
+            logoutLink.style.display = 'block';
+            document.getElementById('quizzes').style.display = 'block';
+            document.getElementById('tasks').style.display = 'block';
         } else {
-            loginMessage.textContent = 'Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.';
+            loginForm.style.display = 'block';
+            logoutLink.style.display = 'none';
+            document.getElementById('quizzes').style.display = 'none';
+            document.getElementById('tasks').style.display = 'none';
+        }
+    }
+
+    loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = loginForm.username.value;
+        const password = loginForm.password.value;
+
+        if (username === loginData.username && password === loginData.password) {
+            setLoggedIn(true);
+            updateLoginState();
+            loginMessage.textContent = 'Erfolgreich angemeldet!';
+        } else {
+            loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
         }
     });
 
-    logoutLink.addEventListener('click', () => {
-        localStorage.removeItem('loggedInUser');
-        showLoggedOutView();
+    logoutLink.addEventListener('click', function() {
+        setLoggedIn(false);
+        updateLoginState();
     });
 
-    quizSelect.addEventListener('change', () => {
-        const selectedQuiz = quizSelect.value;
-        if (selectedQuiz) {
-            showQuiz(selectedQuiz);
+    quizSelect.addEventListener('change', function() {
+        const quizName = quizSelect.value;
+        if (quizName) {
+            showQuiz(quizName);
         } else {
             quizContainer.style.display = 'none';
         }
     });
 
-    taskSelect.addEventListener('change', () => {
-        const selectedTask = taskSelect.value;
-        if (selectedTask) {
-            showTasks(selectedTask);
+    taskSelect.addEventListener('change', function() {
+        const rank = taskSelect.value;
+        if (rank) {
+            showTasks(rank);
         } else {
             taskContainer.style.display = 'none';
         }
     });
 
-    quizForm.addEventListener('submit', (event) => {
+    quizForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        const formData = new FormData(quizForm);
-        const userAnswers = {};
-        formData.forEach((value, key) => {
-            userAnswers[key] = value;
-        });
-
-        const correctAnswers = {
-            question1: 'A',
-            question2: 'C',
-            question3: 'B',
-            question4: 'B'
-        };
-
+        const quizName = quizSelect.value;
+        const answers = correctAnswers[quizName];
         let score = 0;
-        for (let question in correctAnswers) {
-            if (userAnswers[question] === correctAnswers[question]) {
+        const formData = new FormData(quizForm);
+
+        for (let [question, answer] of formData.entries()) {
+            if (answers[question] === answer) {
                 score++;
             }
         }
 
-        if (score === 4) {
+        if (score === Object.keys(answers).length) {
             quizMessage.textContent = 'Glückwunsch! Du hast das Quiz bestanden.';
+            sendEmail(formData.get('name'), formData);
+            resetWaitTime();
         } else {
-            quizMessage.textContent = 'Leider hast du das Quiz nicht bestanden. Bitte versuche es später erneut.';
-            setWaitTime();
+            quizMessage.textContent = 'Leider hast du das Quiz nicht bestanden.';
+            incrementWaitTime();
         }
-
-        quizForm.reset();
     });
-
-    function showLoggedInView() {
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('quizzes').style.display = 'block';
-        document.getElementById('tasks').style.display = 'block';
-        loginLink.style.display = 'none';
-        logoutLink.style.display = 'block';
-    }
-
-    function showLoggedOutView() {
-        document.getElementById('login').style.display = 'block';
-        document.getElementById('quizzes').style.display = 'none';
-        document.getElementById('tasks').style.display = 'none';
-        loginLink.style.display = 'block';
-        logoutLink.style.display = 'none';
-    }
 
     function showQuiz(quizName) {
         const quizQuestions = {
@@ -155,18 +158,36 @@ document.addEventListener('DOMContentLoaded', () => {
         taskContainer.style.display = 'block';
     }
 
-    function setWaitTime() {
+    function incrementWaitTime() {
         const waitTimeKey = 'quizWaitTime';
         let waitTime = parseInt(localStorage.getItem(waitTimeKey) || '0', 10);
-        if (waitTime) {
-            quizMessage.textContent += ` Du musst ${waitTime / 60000} Minuten warten, bevor du es erneut versuchen kannst.`;
-            setTimeout(() => {
-                quizMessage.textContent = '';
-                localStorage.removeItem(waitTimeKey);
-            }, waitTime);
+        if (!waitTime) {
+            waitTime = 60 * 60 * 1000; // 1 Stunde in Millisekunden
         } else {
-            localStorage.setItem(waitTimeKey, '3600000'); // 1 Stunde in Millisekunden
-            quizMessage.textContent += ' Du musst 60 Minuten warten, bevor du es erneut versuchen kannst.';
+            waitTime += 5 * 60 * 1000; // 5 zusätzliche Minuten in Millisekunden
         }
+        localStorage.setItem(waitTimeKey, waitTime);
+        setWaitTime(waitTime);
     }
+
+    function resetWaitTime() {
+        localStorage.removeItem('quizWaitTime');
+    }
+
+    function setWaitTime(waitTime) {
+        quizMessage.textContent += ` Bitte warte ${waitTime / 60000} Minuten, bevor du es erneut versuchen kannst.`;
+        setTimeout(() => {
+            quizMessage.textContent = '';
+            localStorage.removeItem('quizWaitTime');
+        }, waitTime);
+    }
+
+    function sendEmail(name, userAnswers) {
+        // Simulierter E-Mail-Versand
+        console.log(`Sende E-Mail an phrugu18@gmail.com:`);
+        console.log(`Name: ${name}`);
+        console.log(`Antworten:`, userAnswers);
+    }
+
+    updateLoginState();
 });
