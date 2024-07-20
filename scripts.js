@@ -11,9 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskContainer = document.getElementById('taskContainer');
     
     const users = {
-        // Beispiel-Benutzer
-        'user1': 'password1',
-        'user2': 'password2'
+        'Team': '5880'
     };
 
     // Check if the user is already logged in
