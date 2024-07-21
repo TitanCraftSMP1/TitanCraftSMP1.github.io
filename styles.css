@@ -10,6 +10,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
 }
 
 header {
@@ -62,48 +65,35 @@ nav {
     display: none;
 }
 
-#menuToggle:checked + .menu-icon + .menu {
+#menuToggle:checked ~ .menu {
     display: block;
-}
-
-@media (max-width: 768px) {
-    .menu {
-        display: none;
-    }
-
-    .menu-icon {
-        display: block;
-    }
 }
 
 main {
-    padding: 1em;
-    width: 80%;
-    max-width: 600px;
-    margin: 120px auto 0; /* Abstand zum Header */
-    background-color: rgba(255, 255, 255, 0.9); /* Transparenter Hintergrund */
-    border-radius: 10px;
+    margin-top: 5em; /* Space for the fixed header */
+    width: 100%;
 }
 
 section {
-    margin-bottom: 2em;
+    margin: 2em 0;
 }
 
-.question {
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div {
     margin-bottom: 1em;
 }
 
-label {
-    display: block;
-}
-
 button {
+    padding: 0.5em 1em;
     background-color: #4CAF50;
     color: white;
-    padding: 0.5em;
     border: none;
     cursor: pointer;
-    margin-top: 1em;
 }
 
 button:hover {
@@ -111,7 +101,7 @@ button:hover {
 }
 
 footer {
-    background-color: rgba(76, 175, 80, 0.9); /* Transparenterhintergrund */
+    background-color: rgba(76, 175, 80, 0.9); /* Transparenter Hintergrund */
     color: white;
     padding: 1em;
     text-align: center;
@@ -119,4 +109,3 @@ footer {
     position: fixed;
     bottom: 0;
 }
-
