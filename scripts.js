@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(quizForm);
 
         for (let [question, answer] of formData.entries()) {
-            if (answers[question] === answer) {
+            if (question !== 'name' && answer === answers[question]) {
                 score++;
             }
         }
@@ -99,94 +99,93 @@ document.addEventListener('DOMContentLoaded', () => {
         if (score === Object.keys(answers).length) {
             quizMessage.textContent = 'Glückwunsch! Du hast das Quiz bestanden.';
             sendEmail(formData.get('name'), formData);
-            resetWaitTime();
         } else {
-            quizMessage.textContent = 'Leider hast du das Quiz nicht bestanden.';
-            incrementWaitTime();
+            quizMessage.textContent = `Leider hast du das Quiz nicht bestanden. Du hast ${score} von ${Object.keys(answers).length} Fragen richtig.`;
+            setTimeout(() => {
+                quizMessage.textContent = '';
+            }, 3600000); // 1 Stunde warten
         }
+
+        quizForm.reset();
     });
 
     function showQuiz(quizName) {
         const quizQuestions = {
             'tsupporter': [
-                { question: '1. Was würdest du tun, wenn jemand im MC Chat beleidigt?', options: ['A: Muten', 'B: Verwarnen', 'C: Bannen'] },
-                { question: '2. Was machst du, wenn jemand hackt?', options: ['A: Verwarnen', 'B: Bannen', 'C: Bannen und den Inhaber melden'] },
-                { question: '3. Was machst du bei einer Bewerbung?', options: ['A: Nichts', 'B: Inhaber Bescheid geben', 'C: Ein Moderator anpingen'] },
-                { question: '4. Was machst du bei Spammen?', options: ['A: Inhaber Bescheid geben', 'B: Muten', 'C: Kicken'] }
+                {
+                    question: '1. Was würdest du tun, wenn jemand im MC Chat beleidigt?',
+                    options: ['A: Muten', 'B: Verwarnen', 'C: Bannen']
+                },
+                {
+                    question: '2. Was machst du, wenn jemand hackt?',
+                    options: ['A: Verwarnen', 'B: Bannen', 'C: Bannen und den Inhaber melden']
+                },
+                {
+                    question: '3. Was machst du bei einer Bewerbung?',
+                    options: ['A: Nichts', 'B: Inhaber Bescheid geben', 'C: Ein Moderator anpingen']
+                },
+                {
+                    question: '4. Was machst du bei Spammen?',
+                    options: ['A: Inhaber Bescheid geben', 'B: Muten', 'C: Kicken']
+                }
             ]
         };
 
         const questions = quizQuestions[quizName];
-        quizForm.innerHTML = '';
+        quizForm.innerHTML = '<div><label for="name">Name:</label><input type="text" id="name" name="name" required></div>';
         questions.forEach((q, index) => {
-            const div = document.createElement('div');
-            div.className = 'question';
-            const p = document.createElement('p');
-            p.textContent = q.question;
-            div.appendChild(p);
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<p>${q.question}</p>`;
             q.options.forEach(option => {
                 const label = document.createElement('label');
-                label.innerHTML = `<input type="radio" name="question${index + 1}" value="${option.charAt(0)}" required> ${option}`;
-                div.appendChild(label);
-                div.appendChild(document.createElement('br'));
+                label.innerHTML = `<input type="radio" name="question${index + 1}" value="${option[0]}" required> ${option}`;
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(document.createElement('br'));
             });
-            quizForm.appendChild(div);
+            quizForm.appendChild(questionDiv);
         });
-        const button = document.createElement('button');
-        button.type = 'submit';
-        button.textContent = 'Quiz abschließen';
-        quizForm.appendChild(button);
+        quizForm.appendChild(document.createElement('button')).textContent = 'Quiz abschließen';
         quizContainer.style.display = 'block';
     }
 
     function showTasks(rank) {
         const tasks = {
-            'tsupporter': ['Aufgabe 1 für T-Supporter', 'Aufgabe 2 für T-Supporter'],
-            'supporter': ['Aufgabe 1 für Supporter', 'Aufgabe 2 für Supporter'],
-            'moderator': ['Aufgabe 1 für Moderator', 'Aufgabe 2 für Moderator'],
-            'srmoderator': ['Aufgabe 1 für SR-Moderator', 'Aufgabe 2 für SR-Moderator'],
-            'admin': ['Aufgabe 1 für Admin', 'Aufgabe 2 für Admin']
+            'tsupporter': [
+                'Chat aktiv halten',
+                'Generälen Support'
+            ],
+            'supporter': [
+                'Chat aktiv halten',
+                'Generälen Support',
+                'T-Supportern Überwachen, Unterstützen.'
+            ],
+            'moderator': [
+                'Chat aktiv halten',
+                'Generälen Support',
+                'Supporter und T-Supporter bewachen.'
+            ],
+            'srmoderator': [
+                'Chat aktiv halten',
+                'Generälen Support',
+                'Moderator, Supporter und T-Supporter bewachen',
+                'Admins und Inhaber unterstützen.'
+            ],
+            'admin': [
+                'Verwaltung des Servers',
+                'Bewerbungen',
+                'Leitung des Teams.'
+            ]
         };
 
-        const selectedTasks = tasks[rank];
-        taskContainer.innerHTML = '';
-        selectedTasks.forEach(task => {
-            const p = document.createElement('p');
-            p.textContent = task;
-            taskContainer.appendChild(p);
-        });
+        const taskList = tasks[rank];
+        taskContainer.innerHTML = '<ul>' + taskList.map(task => `<li>${task}</li>`).join('') + '</ul>';
         taskContainer.style.display = 'block';
     }
 
-    function incrementWaitTime() {
-        const waitTimeKey = 'quizWaitTime';
-        let waitTime = parseInt(localStorage.getItem(waitTimeKey) || '0', 10);
-        if (!waitTime) {
-            waitTime = 60 * 60 * 1000; // 1 Stunde in Millisekunden
-        } else {
-            waitTime += 5 * 60 * 1000; // 5 zusätzliche Minuten in Millisekunden
-        }
-        localStorage.setItem(waitTimeKey, waitTime);
-        setWaitTime(waitTime);
-    }
-
-    function resetWaitTime() {
-        localStorage.removeItem('quizWaitTime');
-    }
-
-    function setWaitTime(waitTime) {
-        quizMessage.textContent += ` Bitte warte ${waitTime / 60000} Minuten, bevor du es erneut versuchen kannst.`;
-        setTimeout(() => {
-            quizMessage.textContent = '';
-            localStorage.removeItem('quizWaitTime');
-        }, waitTime);
-    }
-
-    function sendEmail(name, userAnswers) {
-        // Simulierter E-Mail-Versand
-        console.log(`Sende E-Mail an phrugu18@gmail.com:`);
-        console.log(`Name: ${name}`);
-        console.log(`Antworten:`, userAnswers);
+    function sendEmail(name, formData) {
+        // Hier den Code für das Senden der E-Mail einfügen
+        // (nicht im Beispiel enthalten, da es serverseitige Logik erfordert)
     }
 
     updateLoginState();
