@@ -68,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setLoggedIn(users[username]);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
+        } else if (Object.values(users).some(user => user.email === username && user.password === password)) {
+            const user = Object.values(users).find(user => user.email === username && user.password === password);
+            setLoggedIn(user);
+            updateLoginState();
+            loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
             loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
         }
@@ -98,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             setLoggedIn(currentUser);
             profileContainer.style.display = 'none';
+            updateLoginState();
         }
     });
 
@@ -137,19 +143,20 @@ document.addEventListener('DOMContentLoaded', () => {
             sendEmail(formData.get('name'), formData);
         } else {
             quizMessage.textContent = `Leider hast du das Quiz nicht bestanden. Du hast ${score} von ${Object.keys(answers).length} Fragen richtig.`;
-            setTimeout(() => {
-                quizMessage.textContent = '';
-            }, 3000);
         }
+        setTimeout(() => {
+            quizMessage.textContent = '';
+        }, 3000);
+        quizForm.reset();
     });
 
     function showQuiz(quizName) {
         const questions = {
             'tsupporter': [
-                { question: 'Frage 1', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
-                { question: 'Frage 2', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
-                { question: 'Frage 3', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
-                { question: 'Frage 4', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } }
+                { question: '1. Was würdest du tun, wenn jemand im MC Chat beleidigt?', options: { 'A': 'Muten', 'B': 'Verwarnen', 'C': 'Bannen' } },
+                { question: '2. Was machst du, wenn jemand hackt?', options: { 'A': 'Verwarnen', 'B': 'Bannen', 'C': 'Bannen und den Inhaber melden' } },
+                { question: '3. Was machst du bei einer Bewerbung?', options: { 'A': 'Nichts', 'B': 'Inhaber Bescheid geben', 'C': 'Ein Moderator anpingen' } },
+                { question: '4. Was machst du bei Spammen?', options: { 'A': 'Inhaber Bescheid geben', 'B': 'Muten', 'C': 'Kicken' } }
             ]
         };
 
@@ -187,11 +194,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showTasks(rank) {
         const tasks = {
-            'tsupporter': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
-            'supporter': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
-            'moderator': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
-            'srmoderator': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
-            'admin': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3']
+            'tsupporter': ['Chat aktiv halten', 'Generälen Support'],
+            'supporter': ['Chat aktiv halten', 'Generälen Support', 'T-Supportern Überwachen, Unterstützen.'],
+            'moderator': ['Chat aktiv halten', 'Generälen Support', 'Supporter und T-Supporter bewachen.'],
+            'srmoderator': ['Chat aktiv halten', 'Generälen Support', 'Moderator, Supporter und T-Supporter bewachen', 'Admins und Inhaber unterstützen.'],
+            'admin': ['Verwaltung des Servers', 'Bewerbungen', 'Leitung des Teams.']
         };
 
         taskContainer.innerHTML = '';
