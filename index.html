@@ -3,34 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TitanCraft SMP Team Webseite</title>
+    <title>TitanCraft SMP</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>TitanCraft SMP Team Webseite</h1>
+        <h1>TitanCraft SMP</h1>
         <nav>
-            <input type="checkbox" id="menuToggle">
-            <label for="menuToggle" class="menu-icon">&#9776;</label>
             <ul class="menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#quizzes">Quizzes</a></li>
-                <li><a href="#tasks">Aufgaben</a></li>
-                <li><a href="#login" id="loginLink">Login</a></li>
-                <li><a href="#changePassword" id="changePasswordLink" style="display:none;">Passwort ändern</a></li>
-                <li><a href="#logout" id="logoutLink" style="display:none;">Logout</a></li>
+                <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
             </ul>
         </nav>
     </header>
     <main>
-        <section id="home">
-            <h2>Willkommen bei TitanCraft SMP</h2>
-            <p>Dies ist die Team-Webseite für TitanCraft SMP. Hier können Sie Quizzes machen und Ihre Aufgaben einsehen.</p>
-        </section>
-
-        <section id="login">
+        <div id="loginContainer">
+            <h2>Login</h2>
             <form id="loginForm">
-                <h2>Anmeldung</h2>
                 <div>
                     <label for="username">Benutzername:</label>
                     <input type="text" id="username" name="username" required>
@@ -40,50 +28,44 @@
                     <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit">Anmelden</button>
-                <p id="loginMessage"></p>
             </form>
-        </section>
-
-        <section id="changePassword" style="display:none;">
+            <p id="loginMessage"></p>
+        </div>
+        <div id="changePasswordContainer" style="display:none;">
+            <h2>Passwort ändern</h2>
             <form id="changePasswordForm">
-                <h2>Passwort ändern</h2>
                 <div>
                     <label for="newPassword">Neues Passwort:</label>
                     <input type="password" id="newPassword" name="newPassword" required>
                 </div>
                 <button type="submit">Passwort ändern</button>
-                <p id="changePasswordMessage"></p>
             </form>
-        </section>
-
-        <section id="quizzes" style="display:none;">
+            <p id="changePasswordMessage"></p>
+        </div>
+        <div id="quizzes" style="display:none;">
             <h2>Quizzes</h2>
             <select id="quizSelect">
-                <option value="">Wählen Sie ein Quiz</option>
+                <option value="">Wähle ein Quiz</option>
                 <option value="tsupporter">T-Supporter zu Supporter</option>
             </select>
             <div id="quizContainer" style="display:none;">
                 <form id="quizForm"></form>
                 <p id="quizMessage"></p>
             </div>
-        </section>
-
-        <section id="tasks" style="display:none;">
+        </div>
+        <div id="tasks" style="display:none;">
             <h2>Aufgaben</h2>
             <select id="taskSelect">
-                <option value="">Wählen Sie einen Rang</option>
+                <option value="">Wähle einen Rang</option>
                 <option value="tsupporter">T-Supporter</option>
                 <option value="supporter">Supporter</option>
                 <option value="moderator">Moderator</option>
-                <option value="srmoderator">SR-Moderator</option>
+                <option value="srmoderator">SR. Moderator</option>
                 <option value="admin">Admin</option>
             </select>
             <div id="taskContainer" style="display:none;"></div>
-        </section>
+        </div>
     </main>
-    <footer>
-        <p>&copy; 2024 TitanCraft SMP</p>
-    </footer>
     <script src="scripts.js"></script>
 </body>
 </html>
