@@ -1,111 +1,108 @@
 body {
     font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #2980b9, #2c3e50);
+    color: white;
     margin: 0;
     padding: 0;
-    background-image: url('background.jpg'); /* Fügen Sie hier den Pfad zu Ihrem Hintergrundbild ein */
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    text-align: center;
 }
 
 header {
-    background-color: rgba(76, 175, 80, 0.9); /* Transparenter Hintergrund */
-    color: white;
-    padding: 1em;
+    background: #2c3e50;
+    padding: 10px 0;
     text-align: center;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000; /* Ensures header stays on top */
+    color: white;
 }
 
 nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.menu {
-    display: none;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background-color: rgba(76, 175, 80, 0.9); /* Transparenter Hintergrund */
-    width: 100%;
-    text-align: center;
-}
-
-.menu li {
-    border-bottom: 1px solid #ddd;
-}
-
-.menu li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
+    margin-top: 10px;
 }
 
 .menu-icon {
     display: none;
-    font-size: 30px;
-    cursor: pointer;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.menu a {
+    text-decoration: none;
     color: white;
-}
-
-#menuToggle {
-    display: none;
-}
-
-#menuToggle:checked ~ .menu {
-    display: block;
 }
 
 main {
-    margin-top: 5em; /* Space for the fixed header */
-    width: 100%;
+    padding: 20px;
+    text-align: center;
 }
 
-section {
-    margin: 2em 0;
+h2 {
+    margin-top: 0;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #34495e;
+    border-radius: 5px;
 }
 
 form div {
-    margin-bottom: 1em;
+    margin-bottom: 15px;
 }
 
-button {
-    padding: 0.5em 1em;
-    background-color: #4CAF50;
-    color: white;
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form button {
+    padding: 10px 15px;
+    background: #2980b9;
     border: none;
+    color: white;
+    border-radius: 3px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #45a049;
+form button:hover {
+    background: #3498db;
 }
 
-footer {
-    background-color: rgba(76, 175, 80, 0.9); /* Transparenter Hintergrund */
-    color: white;
-    padding: 1em;
-    text-align: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
+#quizContainer {
+    text-align: left;
+}
+
+#taskContainer {
+    text-align: left;
+}
+
+.question {
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #34495e;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 3px;
 }
