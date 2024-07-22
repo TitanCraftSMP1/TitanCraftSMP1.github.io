@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
+    const changePasswordForm = document.getElementById('changePasswordForm');
+    const changePasswordMessage = document.getElementById('changePasswordMessage');
     const loginLink = document.getElementById('loginLink');
+    const changePasswordLink = document.getElementById('changePasswordLink');
     const logoutLink = document.getElementById('logoutLink');
     const quizSelect = document.getElementById('quizSelect');
     const quizContainer = document.getElementById('quizContainer');
@@ -19,9 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const loginData = {
-        username: 'Team',
-        password: '5880'
+    const users = {
+        'Jannis': { role: 'inhaber', password: '5880' },
+        'Jürgen': { role: 'inhaber', password: '5880' },
+        'Max': { role: 'admin', password: 'adminpw' },
+        'Bacon': { role: 'mod', password: 'modpw' },
+        'Nunu': { role: 'tsupporter', password: 'tsupporterpw' }
     };
 
     function isLoggedIn() {
@@ -32,17 +38,31 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('isLoggedIn', value ? 'true' : 'false');
     }
 
+    function getCurrentUser() {
+        return localStorage.getItem('currentUser');
+    }
+
+    function setCurrentUser(user) {
+        localStorage.setItem('currentUser', user);
+    }
+
     function updateLoginState() {
         if (isLoggedIn()) {
             loginForm.style.display = 'none';
+            changePasswordForm.style.display = 'none';
             logoutLink.style.display = 'block';
             document.getElementById('quizzes').style.display = 'block';
             document.getElementById('tasks').style.display = 'block';
+            loginLink.style.display = 'none';
+            changePasswordLink.style.display = 'block';
         } else {
             loginForm.style.display = 'block';
+            changePasswordForm.style.display = 'none';
             logoutLink.style.display = 'none';
             document.getElementById('quizzes').style.display = 'none';
             document.getElementById('tasks').style.display = 'none';
+            loginLink.style.display = 'block';
+            changePasswordLink.style.display = 'none';
         }
     }
 
@@ -51,8 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = loginForm.username.value;
         const password = loginForm.password.value;
 
-        if (username === loginData.username && password === loginData.password) {
+        if (users[username] && users[username].password === password) {
             setLoggedIn(true);
+            setCurrentUser(username);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
@@ -62,7 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutLink.addEventListener('click', function() {
         setLoggedIn(false);
+        setCurrentUser('');
         updateLoginState();
+    });
+
+    changePasswordLink.addEventListener('click', function() {
+        changePasswordForm.style.display = 'block';
+    });
+
+    changePasswordForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const newPassword = changePasswordForm.newPassword.value;
+        const currentUser = getCurrentUser();
+
+        if (currentUser && newPassword) {
+            users[currentUser].password = newPassword;
+            changePasswordMessage.textContent = 'Passwort erfolgreich geändert!';
+        } else {
+            changePasswordMessage.textContent = 'Fehler beim Ändern des Passworts.';
+        }
     });
 
     quizSelect.addEventListener('change', function() {
