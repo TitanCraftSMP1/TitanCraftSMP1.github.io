@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const users = {
-        'Jannis': { password: 'adminpass1', role: 'admin' },
-        'Jürgen': { password: 'adminpass2', role: 'admin' },
-        'Max': { password: 'adminpass3', role: 'admin' },
-        'Bacon': { password: 'modpass', role: 'moderator' },
-        'Nunu': { password: 'tsupportpass', role: 'tsupporter' }
+        'Jannis': { password: 'adminpass1', role: 'admin', email: '' },
+        'Jürgen': { password: 'adminpass2', role: 'admin', email: '' },
+        'Max': { password: 'adminpass3', role: 'admin', email: '' },
+        'Bacon': { password: 'modpass', role: 'moderator', email: '' },
+        'Nunu': { password: 'tsupportpass', role: 'tsupporter', email: '' }
     };
 
     let currentUser = null;
@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
             profileLink.style.display = 'block';
             document.getElementById('quizzes').style.display = 'block';
             document.getElementById('tasks').style.display = 'block';
+            if (currentUser.email) {
+                profileLink.querySelector('img').src = 'profile.png'; // Placeholder for user-specific profile image
+            }
         } else {
             loginForm.style.display = 'block';
             logoutLink.style.display = 'none';
@@ -80,14 +83,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     profileLink.addEventListener('click', function() {
         profileContainer.style.display = 'block';
+        profileForm.email.value = currentUser.email || '';
     });
 
     profileForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const email = profileForm.email.value;
-        currentUser.email = email;
-        setLoggedIn(currentUser);
-        profileContainer.style.display = 'none';
+        const newPassword = profileForm.newPassword.value;
+
+        if (currentUser) {
+            currentUser.email = email;
+            if (newPassword) {
+                currentUser.password = newPassword;
+            }
+            setLoggedIn(currentUser);
+            profileContainer.style.display = 'none';
+        }
     });
 
     quizSelect.addEventListener('change', function() {
@@ -128,96 +139,82 @@ document.addEventListener('DOMContentLoaded', () => {
             quizMessage.textContent = `Leider hast du das Quiz nicht bestanden. Du hast ${score} von ${Object.keys(answers).length} Fragen richtig.`;
             setTimeout(() => {
                 quizMessage.textContent = '';
-            }, 3600000); // 1 Stunde warten
+            }, 3000);
         }
-
-        quizForm.reset();
     });
 
     function showQuiz(quizName) {
-        const quizQuestions = {
+        const questions = {
             'tsupporter': [
-                {
-                    question: '1. Was würdest du tun, wenn jemand im MC Chat beleidigt?',
-                    options: ['A: Muten', 'B: Verwarnen', 'C: Bannen']
-                },
-                {
-                    question: '2. Was machst du, wenn jemand hackt?',
-                    options: ['A: Verwarnen', 'B: Bannen', 'C: Bannen und den Inhaber melden']
-                },
-                {
-                    question: '3. Was machst du bei einer Bewerbung?',
-                    options: ['A: Nichts', 'B: Inhaber Bescheid geben', 'C: Ein Moderator anpingen']
-                },
-                {
-                    question: '4. Was machst du bei Spammen?',
-                    options: ['A: Inhaber Bescheid geben', 'B: Muten', 'C: Kicken']
-                }
+                { question: 'Frage 1', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
+                { question: 'Frage 2', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
+                { question: 'Frage 3', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } },
+                { question: 'Frage 4', options: { 'A': 'Antwort A', 'B': 'Antwort B', 'C': 'Antwort C' } }
             ]
         };
 
-        const questions = quizQuestions[quizName];
-        quizForm.innerHTML = '<div><label for="name">Name:</label><input type="text" id="name" name="name" required></div>';
-        questions.forEach((q, index) => {
-            const questionDiv = document.createElement('div');
-            questionDiv.className = 'question';
-            questionDiv.innerHTML = `<p>${q.question}</p>`;
-            q.options.forEach(option => {
+        quizForm.innerHTML = '';
+        const selectedQuiz = questions[quizName];
+
+        selectedQuiz.forEach((q, index) => {
+            const fieldset = document.createElement('fieldset');
+            const legend = document.createElement('legend');
+            legend.textContent = q.question;
+            fieldset.appendChild(legend);
+
+            Object.entries(q.options).forEach(([key, value]) => {
                 const label = document.createElement('label');
-                label.innerHTML = `<input type="radio" name="question${index + 1}" value="${option[0]}" required> ${option}`;
-                questionDiv.appendChild(label);
-                questionDiv.appendChild(document.createElement('br'));
+                label.textContent = value;
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question${index + 1}`;
+                input.value = key;
+                label.prepend(input);
+                fieldset.appendChild(label);
+                fieldset.appendChild(document.createElement('br'));
             });
-            quizForm.appendChild(questionDiv);
+
+            quizForm.appendChild(fieldset);
         });
-        quizForm.appendChild(document.createElement('button')).textContent = 'Quiz abschließen';
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'submit';
+        submitButton.textContent = 'Absenden';
+        quizForm.appendChild(submitButton);
+
         quizContainer.style.display = 'block';
     }
 
     function showTasks(rank) {
         const tasks = {
-            'tsupporter': [
-                'Chat aktiv halten',
-                'Generälen Support'
-            ],
-            'supporter': [
-                'Chat aktiv halten',
-                'Generälen Support',
-                'T-Supportern Überwachen, Unterstützen.'
-            ],
-            'moderator': [
-                'Chat aktiv halten',
-                'Generälen Support',
-                'Supporter und T-Supporter bewachen.'
-            ],
-            'srmoderator': [
-                'Chat aktiv halten',
-                'Generälen Support',
-                'Moderator, Supporter und T-Supporter bewachen',
-                'Admins und Inhaber unterstützen.'
-            ],
-            'admin': [
-                'Verwaltung des Servers',
-                'Bewerbungen',
-                'Leitung des Teams.'
-            ]
+            'tsupporter': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
+            'supporter': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
+            'moderator': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
+            'srmoderator': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3'],
+            'admin': ['Aufgabe 1', 'Aufgabe 2', 'Aufgabe 3']
         };
 
-        const taskList = tasks[rank];
-        taskContainer.innerHTML = '<ul>' + taskList.map(task => `<li>${task}</li>`).join('') + '</ul>';
+        taskContainer.innerHTML = '';
+        const selectedTasks = tasks[rank];
+
+        selectedTasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.textContent = task;
+            taskContainer.appendChild(taskElement);
+        });
+
         taskContainer.style.display = 'block';
     }
 
-    function sendEmail(name, formData) {
-        // Hier den Code für das Senden der E-Mail einfügen
-        // (nicht im Beispiel enthalten, da es serverseitige Logik erfordert)
+    function sendEmail(userName, formData) {
+        console.log(`Email to ${currentUser.email}:\nHallo ${userName},\n\nHerzlichen Glückwunsch! Du hast das Quiz bestanden.\n\nDeine Antworten:\n${Array.from(formData.entries()).map(([q, a]) => `${q}: ${a}`).join('\n')}`);
     }
 
-    // Load user from local storage if available
-    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (savedUser) {
-        setLoggedIn(savedUser);
-    }
-
-    updateLoginState();
+    (function initialize() {
+        const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (storedUser) {
+            setLoggedIn(storedUser);
+        }
+        updateLoginState();
+    })();
 });
