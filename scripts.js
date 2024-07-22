@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
-    const logoutLink = document.getElementById('logoutLink');
     const profileLink = document.getElementById('profileLink');
+    const logoutLink = document.getElementById('logoutLink');
     const profileContainer = document.getElementById('profileContainer');
     const profileForm = document.getElementById('profileForm');
-    const profileMessage = document.getElementById('profileMessage');
     const quizSelect = document.getElementById('quizSelect');
     const quizContainer = document.getElementById('quizContainer');
     const quizForm = document.getElementById('quizForm');
@@ -23,21 +22,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const users = {
-        'Jannis': { role: 'inhaber', password: '5880', email: '' },
-        'Jürgen': { role: 'inhaber', password: '5880', email: '' },
-        'Max': { role: 'admin', password: 'adminpw', email: '' },
-        'Bacon': { role: 'mod', password: 'modpw', email: '' },
-        'Nunu': { role: 'tsupporter', password: 'tsupporterpw', email: '' }
+        'Jannis': { password: 'adminpass1', role: 'admin' },
+        'Jürgen': { password: 'adminpass2', role: 'admin' },
+        'Max': { password: 'adminpass3', role: 'admin' },
+        'Bacon': { password: 'modpass', role: 'moderator' },
+        'Nunu': { password: 'tsupportpass', role: 'tsupporter' }
     };
 
     let currentUser = null;
 
     function isLoggedIn() {
-        return localStorage.getItem('isLoggedIn') === 'true';
+        return currentUser !== null;
     }
 
-    function setLoggedIn(value) {
-        localStorage.setItem('isLoggedIn', value ? 'true' : 'false');
+    function setLoggedIn(user) {
+        currentUser = user;
+        localStorage.setItem('currentUser', user ? JSON.stringify(user) : null);
     }
 
     function updateLoginState() {
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
             profileLink.style.display = 'none';
             document.getElementById('quizzes').style.display = 'none';
             document.getElementById('tasks').style.display = 'none';
-            profileContainer.style.display = 'none';
         }
     }
 
@@ -63,38 +62,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = loginForm.password.value;
 
         if (users[username] && users[username].password === password) {
-            setLoggedIn(true);
-            currentUser = username;
+            setLoggedIn(users[username]);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
             loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
         }
+        setTimeout(() => {
+            loginMessage.textContent = '';
+        }, 3000);
     });
 
     logoutLink.addEventListener('click', function() {
-        setLoggedIn(false);
-        currentUser = null;
+        setLoggedIn(null);
         updateLoginState();
     });
 
     profileLink.addEventListener('click', function() {
-        if (currentUser) {
-            profileContainer.style.display = 'block';
-            profileForm.email.value = users[currentUser].email;
-        }
+        profileContainer.style.display = 'block';
     });
 
     profileForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const email = profileForm.email.value;
-
-        if (currentUser) {
-            users[currentUser].email = email;
-            profileMessage.textContent = 'E-Mail erfolgreich gespeichert.';
-        } else {
-            profileMessage.textContent = 'Fehler beim Speichern der E-Mail.';
-        }
+        currentUser.email = email;
+        setLoggedIn(currentUser);
+        profileContainer.style.display = 'none';
     });
 
     quizSelect.addEventListener('change', function() {
@@ -218,6 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function sendEmail(name, formData) {
         // Hier den Code für das Senden der E-Mail einfügen
         // (nicht im Beispiel enthalten, da es serverseitige Logik erfordert)
+    }
+
+    // Load user from local storage if available
+    const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (savedUser) {
+        setLoggedIn(savedUser);
     }
 
     updateLoginState();
