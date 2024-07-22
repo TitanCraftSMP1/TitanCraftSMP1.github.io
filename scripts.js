@@ -2,14 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
     const logoutLink = document.getElementById('logoutLink');
+    const profileLink = document.getElementById('profileLink');
+    const profileContainer = document.getElementById('profileContainer');
+    const profileForm = document.getElementById('profileForm');
+    const profileMessage = document.getElementById('profileMessage');
     const quizSelect = document.getElementById('quizSelect');
     const quizContainer = document.getElementById('quizContainer');
     const quizForm = document.getElementById('quizForm');
     const quizMessage = document.getElementById('quizMessage');
     const taskSelect = document.getElementById('taskSelect');
     const taskContainer = document.getElementById('taskContainer');
-    const changePasswordForm = document.getElementById('changePasswordForm');
-    const changePasswordMessage = document.getElementById('changePasswordMessage');
 
     const correctAnswers = {
         'tsupporter': {
@@ -21,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const users = {
-        'Jannis': { role: 'inhaber', password: '5880' },
-        'Jürgen': { role: 'inhaber', password: '5880' },
-        'Max': { role: 'admin', password: 'adminpw' },
-        'Bacon': { role: 'mod', password: 'modpw' },
-        'Nunu': { role: 'tsupporter', password: 'tsupporterpw' }
+        'Jannis': { role: 'inhaber', password: '5880', email: '' },
+        'Jürgen': { role: 'inhaber', password: '5880', email: '' },
+        'Max': { role: 'admin', password: 'adminpw', email: '' },
+        'Bacon': { role: 'mod', password: 'modpw', email: '' },
+        'Nunu': { role: 'tsupporter', password: 'tsupporterpw', email: '' }
     };
 
     let currentUser = null;
@@ -42,15 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isLoggedIn()) {
             loginForm.style.display = 'none';
             logoutLink.style.display = 'block';
+            profileLink.style.display = 'block';
             document.getElementById('quizzes').style.display = 'block';
             document.getElementById('tasks').style.display = 'block';
-            document.getElementById('changePasswordContainer').style.display = 'block';
         } else {
             loginForm.style.display = 'block';
             logoutLink.style.display = 'none';
+            profileLink.style.display = 'none';
             document.getElementById('quizzes').style.display = 'none';
             document.getElementById('tasks').style.display = 'none';
-            document.getElementById('changePasswordContainer').style.display = 'none';
+            profileContainer.style.display = 'none';
         }
     }
 
@@ -75,18 +78,23 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLoginState();
     });
 
-    changePasswordForm.addEventListener('submit', function(event) {
+    profileLink.addEventListener('click', function() {
+        if (currentUser) {
+            profileContainer.style.display = 'block';
+            profileForm.email.value = users[currentUser].email;
+        }
+    });
+
+    profileForm.addEventListener('submit', function(event) {
         event.preventDefault();
-        const newPassword = changePasswordForm.newPassword.value;
+        const email = profileForm.email.value;
 
         if (currentUser) {
-            users[currentUser].password = newPassword;
-            changePasswordMessage.textContent = 'Passwort erfolgreich geändert.';
+            users[currentUser].email = email;
+            profileMessage.textContent = 'E-Mail erfolgreich gespeichert.';
         } else {
-            changePasswordMessage.textContent = 'Fehler beim Ändern des Passworts.';
+            profileMessage.textContent = 'Fehler beim Speichern der E-Mail.';
         }
-
-        changePasswordForm.reset();
     });
 
     quizSelect.addEventListener('change', function() {
