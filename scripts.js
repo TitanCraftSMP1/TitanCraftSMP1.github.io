@@ -1,10 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
-    const changePasswordForm = document.getElementById('changePasswordForm');
-    const changePasswordMessage = document.getElementById('changePasswordMessage');
-    const loginLink = document.getElementById('loginLink');
-    const changePasswordLink = document.getElementById('changePasswordLink');
     const logoutLink = document.getElementById('logoutLink');
     const quizSelect = document.getElementById('quizSelect');
     const quizContainer = document.getElementById('quizContainer');
@@ -12,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizMessage = document.getElementById('quizMessage');
     const taskSelect = document.getElementById('taskSelect');
     const taskContainer = document.getElementById('taskContainer');
+    const changePasswordForm = document.getElementById('changePasswordForm');
+    const changePasswordMessage = document.getElementById('changePasswordMessage');
 
     const correctAnswers = {
         'tsupporter': {
@@ -30,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Nunu': { role: 'tsupporter', password: 'tsupporterpw' }
     };
 
+    let currentUser = null;
+
     function isLoggedIn() {
         return localStorage.getItem('isLoggedIn') === 'true';
     }
@@ -38,31 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('isLoggedIn', value ? 'true' : 'false');
     }
 
-    function getCurrentUser() {
-        return localStorage.getItem('currentUser');
-    }
-
-    function setCurrentUser(user) {
-        localStorage.setItem('currentUser', user);
-    }
-
     function updateLoginState() {
         if (isLoggedIn()) {
             loginForm.style.display = 'none';
-            changePasswordForm.style.display = 'none';
             logoutLink.style.display = 'block';
             document.getElementById('quizzes').style.display = 'block';
             document.getElementById('tasks').style.display = 'block';
-            loginLink.style.display = 'none';
-            changePasswordLink.style.display = 'block';
+            document.getElementById('changePasswordContainer').style.display = 'block';
         } else {
             loginForm.style.display = 'block';
-            changePasswordForm.style.display = 'none';
             logoutLink.style.display = 'none';
             document.getElementById('quizzes').style.display = 'none';
             document.getElementById('tasks').style.display = 'none';
-            loginLink.style.display = 'block';
-            changePasswordLink.style.display = 'none';
+            document.getElementById('changePasswordContainer').style.display = 'none';
         }
     }
 
@@ -73,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (users[username] && users[username].password === password) {
             setLoggedIn(true);
-            setCurrentUser(username);
+            currentUser = username;
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
@@ -83,25 +71,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutLink.addEventListener('click', function() {
         setLoggedIn(false);
-        setCurrentUser('');
+        currentUser = null;
         updateLoginState();
-    });
-
-    changePasswordLink.addEventListener('click', function() {
-        changePasswordForm.style.display = 'block';
     });
 
     changePasswordForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const newPassword = changePasswordForm.newPassword.value;
-        const currentUser = getCurrentUser();
 
-        if (currentUser && newPassword) {
+        if (currentUser) {
             users[currentUser].password = newPassword;
-            changePasswordMessage.textContent = 'Passwort erfolgreich geändert!';
+            changePasswordMessage.textContent = 'Passwort erfolgreich geändert.';
         } else {
             changePasswordMessage.textContent = 'Fehler beim Ändern des Passworts.';
         }
+
+        changePasswordForm.reset();
     });
 
     quizSelect.addEventListener('change', function() {
