@@ -17,6 +17,7 @@
                 <li><a href="#quizzes">Quizzes</a></li>
                 <li><a href="#tasks">Aufgaben</a></li>
                 <li><a href="#login" id="loginLink">Login</a></li>
+                <li><a href="#changePassword" id="changePasswordLink" style="display:none;">Passwort ändern</a></li>
                 <li><a href="#logout" id="logoutLink" style="display:none;">Logout</a></li>
             </ul>
         </nav>
@@ -40,6 +41,18 @@
                 </div>
                 <button type="submit">Anmelden</button>
                 <p id="loginMessage"></p>
+            </form>
+        </section>
+
+        <section id="changePassword" style="display:none;">
+            <form id="changePasswordForm">
+                <h2>Passwort ändern</h2>
+                <div>
+                    <label for="newPassword">Neues Passwort:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <button type="submit">Passwort ändern</button>
+                <p id="changePasswordMessage"></p>
             </form>
         </section>
 
