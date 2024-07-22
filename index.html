@@ -11,6 +11,7 @@
         <h1>TitanCraft SMP</h1>
         <nav>
             <ul class="menu">
+                <li><a href="#" id="profileLink" style="display:none;"><img src="profile.png" alt="Profil" class="profile-pic"></a></li>
                 <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
             </ul>
         </nav>
@@ -31,16 +32,16 @@
             </form>
             <p id="loginMessage"></p>
         </div>
-        <div id="changePasswordContainer" style="display:none;">
-            <h2>Passwort ändern</h2>
-            <form id="changePasswordForm">
+        <div id="profileContainer" style="display:none;">
+            <h2>Profil</h2>
+            <form id="profileForm">
                 <div>
-                    <label for="newPassword">Neues Passwort:</label>
-                    <input type="password" id="newPassword" name="newPassword" required>
+                    <label for="email">E-Mail:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <button type="submit">Passwort ändern</button>
+                <button type="submit">Speichern</button>
             </form>
-            <p id="changePasswordMessage"></p>
+            <p id="profileMessage"></p>
         </div>
         <div id="quizzes" style="display:none;">
             <h2>Quizzes</h2>
