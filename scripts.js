@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Bacon': { password: 'modpass', role: 'manager', email: '' },
         'Felix': { password: 'tsupportpass', role: 'tsupporter', email: '' },
         'DiamondKingHD': { password: 'supportpass', role: 'supporter', email: '' },
-        'Marcel': { password: 'supportpass', role: 'supporter', email: '' },
+        'Marcel': { password: 'supp0rtpass', role: 'supporter', email: '' },
         'Winterstream': { password: 'socialmediapass', role: 'socialmedia', email: '' },
         'Leo': { password: 'builderpass', role: 'builder', email: '' }
     };
