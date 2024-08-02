@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const users = {
-        'Jannis': { password: 'adminpass1', role: 'admin', email: 'phrugu18@gmail.com' },
-        'Jürgen': { password: 'adminpass2', role: 'admin', email: '' },
+        'Jannis': { password: 'adminpass1', role: 'admin', email: '' },
+        'Jürgen': { password: 'adminpass2', role: 'admin', email: 'phrugu18@gmail.com' },
         'Max': { password: 'adminpass3', role: 'admin', email: '' },
         'Bacon': { password: 'modpass', role: 'moderator', email: '' },
         'Nunu': { password: 'tsupportpass', role: 'tsupporter', email: '' }
