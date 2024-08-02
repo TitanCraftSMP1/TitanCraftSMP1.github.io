@@ -3,73 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TitanCraft SMP</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Login</title>
 </head>
 <body>
-    <header>
-        <h1>TitanCraft SMP</h1>
-        <nav>
-            <ul class="menu">
-                <li><a href="#" id="profileLink" style="display:none;"><img src="profile.png" alt="Profil" class="profile-pic"></a></li>
-                <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div id="loginContainer">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <div>
-                    <label for="username">Benutzername:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div>
-                    <label for="password">Passwort:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit">Anmelden</button>
-            </form>
-            <p id="loginMessage"></p>
+    <div id="loginForm">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Benutzername oder E-Mail:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Anmelden</button>
+        </form>
+        <p id="loginMessage"></p>
+    </div>
+
+    <div id="logoutLink" style="display: none;">
+        <button>Abmelden</button>
+    </div>
+
+    <div id="profileLink" style="display: none;">
+        <button>Profil</button>
+        <img src="default-profile.png" alt="Profilbild">
+    </div>
+
+    <div id="profileContainer" style="display: none;">
+        <form id="profileForm">
+            <label for="email">E-Mail:</label>
+            <input type="email" id="email" name="email">
+            <br>
+            <label for="newPassword">Neues Passwort:</label>
+            <input type="password" id="newPassword" name="newPassword">
+            <br>
+            <button type="submit">Aktualisieren</button>
+        </form>
+    </div>
+
+    <div id="quizzes" style="display: none;">
+        <h2>Quiz auswählen</h2>
+        <select id="quizSelect">
+            <option value="">--Wählen Sie ein Quiz--</option>
+            <option value="tsupporter">T-Supporter Quiz</option>
+        </select>
+        <div id="quizContainer" style="display: none;">
+            <form id="quizForm"></form>
+            <p id="quizMessage"></p>
         </div>
-        <div id="profileContainer" style="display:none;">
-            <h2>Profil</h2>
-            <form id="profileForm">
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="password">Neues Passwort:</label>
-                    <input type="password" id="newPassword" name="newPassword">
-                </div>
-                <button type="submit">Speichern</button>
-            </form>
-        </div>
-        <div id="quizzes" style="display:none;">
-            <h2>Quizzes</h2>
-            <select id="quizSelect">
-                <option value="">Wähle ein Quiz</option>
-                <option value="tsupporter">T-Supporter zu Supporter</option>
-            </select>
-            <div id="quizContainer" style="display:none;">
-                <form id="quizForm"></form>
-                <p id="quizMessage"></p>
-            </div>
-        </div>
-        <div id="tasks" style="display:none;">
-            <h2>Aufgaben</h2>
-            <select id="taskSelect">
-                <option value="">Wähle einen Rang</option>
-                <option value="tsupporter">T-Supporter</option>
-                <option value="supporter">Supporter</option>
-                <option value="moderator">Moderator</option>
-                <option value="srmoderator">SR. Moderator</option>
-                <option value="admin">Admin</option>
-            </select>
-            <div id="taskContainer" style="display:none;"></div>
-        </div>
-    </main>
-    <script src="scripts.js"></script>
+    </div>
+
+    <div id="tasks" style="display: none;">
+        <h2>Aufgaben auswählen</h2>
+        <select id="taskSelect">
+            <option value="">--Wählen Sie eine Rolle--</option>
+            <option value="tsupporter">T-Supporter</option>
+            <option value="supporter">Supporter</option>
+            <option value="moderator">Moderator</option>
+            <option value="srmoderator">Sr. Moderator</option>
+            <option value="admin">Admin</option>
+            <option value="manager">Manager</option>
+            <option value="socialmedia">Social Media</option>
+            <option value="builder">Builder</option>
+        </select>
+        <div id="taskContainer" style="display: none;"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
