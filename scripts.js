@@ -24,9 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const users = {
         'Jannis': { password: 'adminpass1', role: 'admin', email: '' },
         'Jürgen': { password: 'adminpass2', role: 'admin', email: 'phrugu18@gmail.com' },
-        'Max': { password: 'adminpass3', role: 'admin', email: '' },
-        'Bacon': { password: 'modpass', role: 'moderator', email: '' },
-        'Nunu': { password: 'tsupportpass', role: 'tsupporter', email: '' }
+        'Max': { password: 'adminpass3', role: 'manager', email: '' },
+        'Bacon': { password: 'modpass', role: 'manager', email: '' },
+        'Felix': { password: 'tsupportpass', role: 'tsupporter', email: '' },
+        'DiamondKingHD': { password: 'supportpass', role: 'supporter', email: '' },
+        'Marcel': { password: 'supportpass', role: 'supporter', email: '' },
+        'Winterstream': { password: 'socialmediapass', role: 'socialmedia', email: '' },
+        'Leo': { password: 'builderpass', role: 'builder', email: '' }
     };
 
     let currentUser = null;
@@ -64,21 +68,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = loginForm.username.value;
         const password = loginForm.password.value;
 
-        console.log(`Attempting login with username: ${username}, password: ${password}`);
-
         if (users[username] && users[username].password === password) {
-            console.log('User found by username');
             setLoggedIn(users[username]);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else if (Object.values(users).some(user => user.email === username && user.password === password)) {
             const user = Object.values(users).find(user => user.email === username && user.password === password);
-            console.log('User found by email');
             setLoggedIn(user);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
-            console.log('Invalid username or password');
             loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
         }
         setTimeout(() => {
@@ -87,13 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     logoutLink.addEventListener('click', function() {
-        console.log('Logging out');
         setLoggedIn(null);
         updateLoginState();
     });
 
     profileLink.addEventListener('click', function() {
-        console.log('Opening profile');
         profileContainer.style.display = 'block';
         profileForm.email.value = currentUser.email || '';
     });
@@ -102,8 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const email = profileForm.email.value;
         const newPassword = profileForm.newPassword.value;
-
-        console.log('Updating profile');
 
         if (currentUser) {
             currentUser.email = email;
@@ -207,7 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
             'supporter': ['Chat aktiv halten', 'Generälen Support', 'T-Supportern Überwachen, Unterstützen.'],
             'moderator': ['Chat aktiv halten', 'Generälen Support', 'Supporter und T-Supporter bewachen.'],
             'srmoderator': ['Chat aktiv halten', 'Generälen Support', 'Moderator, Supporter und T-Supporter bewachen', 'Admins und Inhaber unterstützen.'],
-            'admin': ['Verwaltung des Servers', 'Bewerbungen', 'Leitung des Teams.']
+            'admin': ['Verwaltung des Servers', 'Bewerbungen', 'Leitung des Teams.'],
+            'manager': ['Management der Moderatoren und Supporter', 'Verwaltung der Aufgabenverteilung'],
+            'socialmedia': ['Social Media Beiträge erstellen', 'Community-Engagement fördern'],
+            'builder': ['Server-Bauprojekte durchführen', 'Kreative Inhalte erstellen']
         };
 
         taskContainer.innerHTML = '';
