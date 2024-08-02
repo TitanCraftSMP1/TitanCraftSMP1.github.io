@@ -64,16 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = loginForm.username.value;
         const password = loginForm.password.value;
 
+        console.log(`Attempting login with username: ${username}, password: ${password}`);
+
         if (users[username] && users[username].password === password) {
+            console.log('User found by username');
             setLoggedIn(users[username]);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else if (Object.values(users).some(user => user.email === username && user.password === password)) {
             const user = Object.values(users).find(user => user.email === username && user.password === password);
+            console.log('User found by email');
             setLoggedIn(user);
             updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
+            console.log('Invalid username or password');
             loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
         }
         setTimeout(() => {
@@ -82,11 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     logoutLink.addEventListener('click', function() {
+        console.log('Logging out');
         setLoggedIn(null);
         updateLoginState();
     });
 
     profileLink.addEventListener('click', function() {
+        console.log('Opening profile');
         profileContainer.style.display = 'block';
         profileForm.email.value = currentUser.email || '';
     });
@@ -95,6 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const email = profileForm.email.value;
         const newPassword = profileForm.newPassword.value;
+
+        console.log('Updating profile');
 
         if (currentUser) {
             currentUser.email = email;
