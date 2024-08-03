@@ -18,15 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminContainer = document.getElementById('adminContainer');
     const loginRecords = document.getElementById('loginRecords');
 
-    const correctAnswers = {
-        'tsupporter': {
-            question1: 'A',
-            question2: 'C',
-            question3: 'B',
-            question4: 'B'
-        }
-    };
-
     showPrivacyPolicyButton.addEventListener('click', () => {
         privacyPolicyModal.style.display = 'block';
     });
@@ -46,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const username = event.target.username.value;
         const password = event.target.password.value;
 
-        // Überprüfung der Login-Daten
+        // Dummy-Inhaber-Überprüfung - Ersetzen Sie dies durch echte Überprüfungen
         if (username === 'inhaber' && password === 'securepassword') {
-            // Wenn der Benutzer ein Inhaber ist, Admin-Link anzeigen
             profileLink.style.display = 'block';
             logoutLink.style.display = 'block';
             adminLink.style.display = 'block';
@@ -173,4 +163,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </ul>
         `;
     }
+
+    // Dummy-Inhaber-Überprüfung - Ersetzen Sie dies durch echte Überprüfungen
+    const correctAnswers = {
+        'tsupporter': {
+            question1: 'A',
+            question2: 'C',
+            question3: 'B',
+            question4: 'B'
+        }
+    };
 });
