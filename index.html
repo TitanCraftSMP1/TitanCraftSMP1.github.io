@@ -1,9 +1,10 @@
+<!DOCTYPE html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TitanCraft SMP</title>
     <link rel="stylesheet" href="styles.css">
-    <title>Login</title>
 </head>
 <body>
     <header>
@@ -30,7 +31,8 @@
                 <button type="submit">Anmelden</button>
             </form>
             <p id="loginMessage"></p>
-                <div id="profileContainer" style="display:none;">
+        </div>
+        <div id="profileContainer" style="display:none;">
             <h2>Profil</h2>
             <form id="profileForm">
                 <div>
@@ -67,7 +69,82 @@
             </select>
             <div id="taskContainer" style="display:none;"></div>
         </div>
+        <section id="datenschutz">
+            <h2>Datenschutzerklärung</h2>
+            <p>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung erklärt, welche Informationen wir sammeln, wie wir diese verwenden und welche Rechte Sie bezüglich Ihrer Daten haben.</p>
+            <h3>Verantwortlicher</h3>
+            <p>
+                Verantwortlich für die Verarbeitung der Daten ist:<br>
+                [Unternehmensname]<br>
+                [Adresse]<br>
+                [E-Mail-Adresse]<br>
+                [Telefonnummer]
+            </p>
+            <h3>Erhobene Daten</h3>
+            <p>
+                Wir erfassen und verarbeiten die folgenden Daten im Rahmen der Anmeldung und Nutzung unserer Plattform:
+                <ul>
+                    <li>Benutzername oder E-Mail-Adresse</li>
+                    <li>Passwort</li>
+                    <li>Zeitpunkt des Logins</li>
+                    <li>Informationen über das verwendete Gerät (PC, Betriebssystem, Browser)</li>
+                    <li>Standortinformationen</li>
+                </ul>
+            </p>
+            <h3>Zweck der Datenerhebung</h3>
+            <p>
+                Die erhobenen Daten werden zu folgenden Zwecken verwendet:
+                <ul>
+                    <li>Authentifizierung und Zugangskontrolle</li>
+                    <li>Sicherheitsüberwachung</li>
+                    <li>Verbesserung der Nutzererfahrung</li>
+                </ul>
+            </p>
+            <h3>Rechtsgrundlage der Verarbeitung</h3>
+            <p>
+                Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung unserer vertraglichen Pflichten (Art. 6 Abs. 1 lit. b DSGVO).
+            </p>
+            <h3>Speicherung der Daten</h3>
+            <p>
+                Die erhobenen Daten werden für die Dauer der Nutzung unserer Plattform gespeichert und anschließend gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Login-Daten werden in der Regel für einen Zeitraum von [Zeitraum, z.B. 6 Monate] gespeichert.
+            </p>
+            <h3>Weitergabe der Daten</h3>
+            <p>
+                Ihre Daten werden nicht an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung unserer vertraglichen Pflichten erforderlich oder wir sind gesetzlich dazu verpflichtet.
+            </p>
+            <h3>Ihre Rechte</h3>
+            <p>
+                Sie haben das Recht:
+                <ul>
+                    <li>Auskunft über Ihre gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
+                    <li>Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
+                    <li>Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)</li>
+                    <li>Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
+                    <li>Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
+                    <li>Widerspruch gegen die Datenverarbeitung einzulegen (Art. 21 DSGVO)</li>
+                    <li>Ihre Einwilligung zur Datenverarbeitung jederzeit zu widerrufen (Art. 7 Abs. 3 DSGVO)</li>
+                </ul>
+            </p>
+            <h3>Kontakt</h3>
+            <p>
+                Bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten oder zur Ausübung Ihrer Rechte können Sie sich an uns wenden:
+                <br>
+                [Unternehmensname]<br>
+                [Adresse]<br>
+                [E-Mail-Adresse]<br>
+                [Telefonnummer]
+            </p>
+            <h3>Änderungen der Datenschutzerklärung</h3>
+            <p>
+                Wir behalten uns das Recht vor, diese Datenschutzerklärung bei Bedarf anzupassen, um rechtlichen Anforderungen zu entsprechen oder Änderungen unserer Dienstleistungen umzusetzen. Die jeweils aktuelle Version finden Sie auf unserer Webseite.
+            </p>
+            <h3>Zustimmung zur Datenschutzerklärung</h3>
+            <p>
+                Mit der Nutzung unserer Plattform stimmen Sie der Verarbeitung Ihrer personenbezogenen Daten gemäß dieser Datenschutzerklärung zu.
+            </p>
+        </section>
     </main>
-    <script src="scripts.js">
-</script></body>
+    <script src="scripts.js"></script>
+    <script src="login-verification.js"></script>
+</body>
 </html>
