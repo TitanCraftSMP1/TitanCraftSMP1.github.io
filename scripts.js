@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const adminSection = document.getElementById('adminSection');
+    const userSection = document.getElementById('userSection');
     const loginForm = document.getElementById('loginForm');
     const loginMessage = document.getElementById('loginMessage');
     const profileLink = document.getElementById('profileLink');
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setLoggedIn(user) {
         currentUser = user;
         localStorage.setItem('currentUser', user ? JSON.stringify(user) : null);
+        updateLoginState();
     }
 
     function updateLoginState() {
@@ -41,15 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
             profileLink.style.display = 'block';
             document.getElementById('quizzes').style.display = 'block';
             document.getElementById('tasks').style.display = 'block';
-            if (currentUser.email) {
-                profileLink.querySelector('img').src = 'profile.png'; // Placeholder für Benutzerbild
-            }
+            adminSection.style.display = currentUser.role === 'admin' ? 'block' : 'none';
         } else {
             loginForm.style.display = 'block';
             logoutLink.style.display = 'none';
             profileLink.style.display = 'none';
             document.getElementById('quizzes').style.display = 'none';
             document.getElementById('tasks').style.display = 'none';
+            adminSection.style.display = 'none';
         }
     }
 
@@ -60,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (users[username] && users[username].password === password) {
             setLoggedIn(users[username]);
-            updateLoginState();
             loginMessage.textContent = 'Erfolgreich angemeldet!';
         } else {
             loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
@@ -72,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutLink.addEventListener('click', function() {
         setLoggedIn(null);
-        updateLoginState();
     });
 
     profileLink.addEventListener('click', function() {
@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             setLoggedIn(currentUser);
             profileContainer.style.display = 'none';
-            updateLoginState();
         }
     });
 
@@ -205,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function sendEmail(userName, formData) {
-        console.log(`Email to ${currentUser.email}:\nHallo ${userName},\n\nHerzlichen Glückwunsch! Du hast das Quiz bestanden.\n\nDeine Antworten:\n${Array.from(formData.entries()).map(([q, a]) => `${q}: ${a}`).join('\n')}`);
+        console.log(`Email to ${currentUser.email}:\nHallo ${userName},\n\nHerzlichen Glückwunsch! Du hast das Quiz erfolgreich bestanden.`);
     }
 
     (function initialize() {
