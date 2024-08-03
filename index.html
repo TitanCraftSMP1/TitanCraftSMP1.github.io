@@ -13,7 +13,6 @@
             <ul class="menu">
                 <li><a href="#" id="profileLink" style="display:none;"><img src="profile.png" alt="Profil" class="profile-pic"></a></li>
                 <li><a href="#" id="logoutLink" style="display:none;">Logout</a></li>
-                <li><a href="#" id="adminLink" style="display:none;">Admin-Überprüfung</a></li>
             </ul>
         </nav>
     </header>
@@ -32,7 +31,6 @@
                 <button type="submit">Anmelden</button>
             </form>
             <p id="loginMessage"></p>
-            <button id="showPrivacyPolicyButton">Datenschutzerklärung</button>
         </div>
         <div id="profileContainer" style="display:none;">
             <h2>Profil</h2>
@@ -47,79 +45,6 @@
                 </div>
                 <button type="submit">Speichern</button>
             </form>
-        </div>
-        <div id="adminContainer" style="display:none;">
-            <h2>Admin-Überprüfung</h2>
-            <div id="loginRecords"></div>
-        </div>
-        <div id="privacyPolicyModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h2>Datenschutzerklärung</h2>
-                <p>
-                    Einleitung
-                    Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung erklärt, welche Informationen wir sammeln, wie wir diese verwenden und welche Rechte Sie bezüglich Ihrer Daten haben.
-                </p>
-                <p>
-                    Verantwortlicher
-                    Verantwortlich für die Verarbeitung der Daten ist:
-                    Philipp Litwin
-                    phrugu18@gmail.com
-                </p>
-                <p>
-                    Erhobene Daten
-                    Wir erfassen und verarbeiten die folgenden Daten im Rahmen der Anmeldung und Nutzung unserer Plattform:
-                    Benutzername oder E-Mail-Adresse
-                    Passwort
-                    Zeitpunkt des Logins
-                    Informationen über das verwendete Gerät (PC, Betriebssystem, Browser)
-                    Standortinformationen
-                </p>
-                <p>
-                    Zweck der Datenerhebung
-                    Die erhobenen Daten werden zu folgenden Zwecken verwendet:
-                    Authentifizierung und Zugangskontrolle: Sicherstellung, dass nur berechtigte Inhaber-Accounts Zugriff auf bestimmte Bereiche haben.
-                    Sicherheitsüberwachung: Protokollierung von Login-Versuchen, um verdächtiges Verhalten zu erkennen und Sicherheitsvorfälle zu verhindern.
-                    Verbesserung der Nutzererfahrung: Anpassung unserer Dienste an die Bedürfnisse unserer Nutzer basierend auf dem verwendeten Gerät und Standort.
-                </p>
-                <p>
-                    Rechtsgrundlage der Verarbeitung
-                    Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung unserer vertraglichen Pflichten (Art. 6 Abs. 1 lit. b DSGVO).
-                </p>
-                <p>
-                    Speicherung der Daten
-                    Die erhobenen Daten werden für die Dauer der Nutzung unserer Plattform gespeichert und anschließend gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Login-Daten werden in der Regel für einen Zeitraum von [Zeitraum, z.B. 6 Monate] gespeichert.
-                </p>
-                <p>
-                    Weitergabe der Daten
-                    Ihre Daten werden nicht an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung unserer vertraglichen Pflichten erforderlich oder wir sind gesetzlich dazu verpflichtet.
-                </p>
-                <p>
-                    Ihre Rechte
-                    Sie haben das Recht:
-                    Auskunft über Ihre gespeicherten Daten zu erhalten (Art. 15 DSGVO)
-                    Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)
-                    Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)
-                    Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)
-                    Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)
-                    Widerspruch gegen die Datenverarbeitung einzulegen (Art. 21 DSGVO)
-                    Ihre Einwilligung zur Datenverarbeitung jederzeit zu widerrufen (Art. 7 Abs. 3 DSGVO)
-                </p>
-                <p>
-                    Kontakt
-                    Bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten oder zur Ausübung Ihrer Rechte können Sie sich an uns wenden:
-                    phrugu18@gmail.com
-                    Discord: hacker0115314
-                </p>
-                <p>
-                    Änderungen der Datenschutzerklärung
-                    Wir behalten uns das Recht vor, diese Datenschutzerklärung bei Bedarf anzupassen, um rechtlichen Anforderungen zu entsprechen oder Änderungen unserer Dienstleistungen umzusetzen. Die jeweils aktuelle Version finden Sie auf unserer Webseite.
-                </p>
-                <p>
-                    Zustimmung zur Datenschutzerklärung
-                    Mit der Nutzung unserer Plattform stimmen Sie der Verarbeitung Ihrer personenbezogenen Daten gemäß dieser Datenschutzerklärung zu.
-                </p>
-            </div>
         </div>
         <div id="quizzes" style="display:none;">
             <h2>Quizzes</h2>
@@ -144,6 +69,7 @@
             </select>
             <div id="taskContainer" style="display:none;"></div>
         </div>
+        <button id="adminButton" style="display:none;">Admin Bereich</button>
     </main>
     <script src="scripts.js"></script>
 </body>
