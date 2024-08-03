@@ -31,6 +31,7 @@
                 <button type="submit">Anmelden</button>
             </form>
             <p id="loginMessage"></p>
+            <button id="showPrivacyPolicyButton">Datenschutzerklärung</button>
         </div>
         <div id="profileContainer" style="display:none;">
             <h2>Profil</h2>
@@ -69,82 +70,59 @@
             </select>
             <div id="taskContainer" style="display:none;"></div>
         </div>
-        <section id="datenschutz">
+        <div id="privacyPolicy" style="display:none;">
             <h2>Datenschutzerklärung</h2>
-            <p>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung erklärt, welche Informationen wir sammeln, wie wir diese verwenden und welche Rechte Sie bezüglich Ihrer Daten haben.</p>
+            <p>Einleitung<br>Der Schutz Ihrer persönlichen Daten ist uns ein wichtiges Anliegen. Diese Datenschutzerklärung erklärt, welche Informationen wir sammeln, wie wir diese verwenden und welche Rechte Sie bezüglich Ihrer Daten haben.</p>
             <h3>Verantwortlicher</h3>
-            <p>
-                Verantwortlich für die Verarbeitung der Daten ist:<br>
-                [Unternehmensname]<br>
-                [Adresse]<br>
-                [E-Mail-Adresse]<br>
-                [Telefonnummer]
-            </p>
+            <p>Verantwortlich für die Verarbeitung der Daten ist:<br>Philipp Litwin<br>phrugu18@gmail.com</p>
             <h3>Erhobene Daten</h3>
-            <p>
-                Wir erfassen und verarbeiten die folgenden Daten im Rahmen der Anmeldung und Nutzung unserer Plattform:
-                <ul>
-                    <li>Benutzername oder E-Mail-Adresse</li>
-                    <li>Passwort</li>
-                    <li>Zeitpunkt des Logins</li>
-                    <li>Informationen über das verwendete Gerät (PC, Betriebssystem, Browser)</li>
-                    <li>Standortinformationen</li>
-                </ul>
-            </p>
+            <p>Wir erfassen und verarbeiten die folgenden Daten im Rahmen der Anmeldung und Nutzung unserer Plattform:</p>
+            <ul>
+                <li>Benutzername oder E-Mail-Adresse</li>
+                <li>Passwort</li>
+                <li>Zeitpunkt des Logins</li>
+                <li>Informationen über das verwendete Gerät (PC, Betriebssystem, Browser)</li>
+                <li>Standortinformationen</li>
+            </ul>
             <h3>Zweck der Datenerhebung</h3>
-            <p>
-                Die erhobenen Daten werden zu folgenden Zwecken verwendet:
-                <ul>
-                    <li>Authentifizierung und Zugangskontrolle</li>
-                    <li>Sicherheitsüberwachung</li>
-                    <li>Verbesserung der Nutzererfahrung</li>
-                </ul>
-            </p>
+            <p>Die erhobenen Daten werden zu folgenden Zwecken verwendet:</p>
+            <ul>
+                <li>Authentifizierung und Zugangskontrolle: Sicherstellung, dass nur berechtigte Inhaber-Accounts Zugriff auf bestimmte Bereiche haben.</li>
+                <li>Sicherheitsüberwachung: Protokollierung von Login-Versuchen, um verdächtiges Verhalten zu erkennen und Sicherheitsvorfälle zu verhindern.</li>
+                <li>Verbesserung der Nutzererfahrung: Anpassung unserer Dienste an die Bedürfnisse unserer Nutzer basierend auf dem verwendeten Gerät und Standort.</li>
+            </ul>
             <h3>Rechtsgrundlage der Verarbeitung</h3>
-            <p>
-                Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung unserer vertraglichen Pflichten (Art. 6 Abs. 1 lit. b DSGVO).
-            </p>
+            <p>Die Verarbeitung Ihrer Daten erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) und zur Erfüllung unserer vertraglichen Pflichten (Art. 6 Abs. 1 lit. b DSGVO).</p>
             <h3>Speicherung der Daten</h3>
-            <p>
-                Die erhobenen Daten werden für die Dauer der Nutzung unserer Plattform gespeichert und anschließend gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Login-Daten werden in der Regel für einen Zeitraum von [Zeitraum, z.B. 6 Monate] gespeichert.
-            </p>
+            <p>Die erhobenen Daten werden für die Dauer der Nutzung unserer Plattform gespeichert und anschließend gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten bestehen. Login-Daten werden in der Regel für einen Zeitraum von [Zeitraum, z.B. 6 Monate] gespeichert.</p>
             <h3>Weitergabe der Daten</h3>
-            <p>
-                Ihre Daten werden nicht an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung unserer vertraglichen Pflichten erforderlich oder wir sind gesetzlich dazu verpflichtet.
-            </p>
+            <p>Ihre Daten werden nicht an Dritte weitergegeben, es sei denn, dies ist zur Erfüllung unserer vertraglichen Pflichten erforderlich oder wir sind gesetzlich dazu verpflichtet.</p>
             <h3>Ihre Rechte</h3>
-            <p>
-                Sie haben das Recht:
-                <ul>
-                    <li>Auskunft über Ihre gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
-                    <li>Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
-                    <li>Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)</li>
-                    <li>Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
-                    <li>Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
-                    <li>Widerspruch gegen die Datenverarbeitung einzulegen (Art. 21 DSGVO)</li>
-                    <li>Ihre Einwilligung zur Datenverarbeitung jederzeit zu widerrufen (Art. 7 Abs. 3 DSGVO)</li>
-                </ul>
-            </p>
+            <p>Sie haben das Recht:</p>
+            <ul>
+                <li>Auskunft über Ihre gespeicherten Daten zu erhalten (Art. 15 DSGVO)</li>
+                <li>Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO)</li>
+                <li>Löschung Ihrer Daten zu verlangen (Art. 17 DSGVO)</li>
+                <li>Einschränkung der Verarbeitung zu verlangen (Art. 18 DSGVO)</li>
+                <li>Datenübertragbarkeit zu verlangen (Art. 20 DSGVO)</li>
+                <li>Widerspruch gegen die Datenverarbeitung einzulegen (Art. 21 DSGVO)</li>
+                <li>Ihre Einwilligung zur Datenverarbeitung jederzeit zu widerrufen (Art. 7 Abs. 3 DSGVO)</li>
+            </ul>
             <h3>Kontakt</h3>
-            <p>
-                Bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten oder zur Ausübung Ihrer Rechte können Sie sich an uns wenden:
-                <br>
-                [Unternehmensname]<br>
-                [Adresse]<br>
-                [E-Mail-Adresse]<br>
-                [Telefonnummer]
-            </p>
+            <p>Bei Fragen zur Verarbeitung Ihrer personenbezogenen Daten oder zur Ausübung Ihrer Rechte können Sie sich an uns wenden:<br>phrugu18@gmail.com<br>Discord: hacker0115314</p>
             <h3>Änderungen der Datenschutzerklärung</h3>
-            <p>
-                Wir behalten uns das Recht vor, diese Datenschutzerklärung bei Bedarf anzupassen, um rechtlichen Anforderungen zu entsprechen oder Änderungen unserer Dienstleistungen umzusetzen. Die jeweils aktuelle Version finden Sie auf unserer Webseite.
-            </p>
+            <p>Wir behalten uns das Recht vor, diese Datenschutzerklärung bei Bedarf anzupassen, um rechtlichen Anforderungen zu entsprechen oder Änderungen unserer Dienstleistungen umzusetzen. Die jeweils aktuelle Version finden Sie auf unserer Webseite.</p>
             <h3>Zustimmung zur Datenschutzerklärung</h3>
-            <p>
-                Mit der Nutzung unserer Plattform stimmen Sie der Verarbeitung Ihrer personenbezogenen Daten gemäß dieser Datenschutzerklärung zu.
-            </p>
-        </section>
+            <p>Mit der Nutzung unserer Plattform stimmen Sie der Verarbeitung Ihrer personenbezogenen Daten gemäß dieser Datenschutzerklärung zu.</p>
+        </div>
     </main>
     <script src="scripts.js"></script>
     <script src="login-verification.js"></script>
+    <script>
+        document.getElementById('showPrivacyPolicyButton').addEventListener('click', function() {
+            const privacyPolicy = document.getElementById('privacyPolicy');
+            privacyPolicy.style.display = privacyPolicy.style.display === 'none' ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>
