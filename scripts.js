@@ -30,11 +30,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return currentUser !== null;
     }
 
-    function setLoggedIn(user) {
-        currentUser = user;
-        localStorage.setItem('currentUser', user ? JSON.stringify(user) : null);
-        updateLoginState();
+function setLoggedIn(user) {
+    if (user) {
+        currentUser = {...user, username: Object.keys(users).find(key => users[key] === user)};
+    } else {
+        currentUser = null;
     }
+    localStorage.setItem('currentUser', currentUser ? JSON.stringify(currentUser) : null);
+    updateLoginState();
+}
+
+
 
     function updateLoginState() {
         if (isLoggedIn()) {
@@ -55,20 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const username = loginForm.username.value;
-        const password = loginForm.password.value;
+    event.preventDefault();
+    const username = loginForm.username.value;
+    const password = loginForm.password.value;
 
-        if (users[username] && users[username].password === password) {
-            setLoggedIn(users[username]);
-            loginMessage.textContent = 'Erfolgreich angemeldet!';
-        } else {
-            loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
-        }
-        setTimeout(() => {
-            loginMessage.textContent = '';
-        }, 3000);
-    });
+    if (users[username] && users[username].password === password) {
+        setLoggedIn({...users[username], username});  // Benutzername hinzufügen
+        loginMessage.textContent = 'Erfolgreich angemeldet!';
+    } else {
+        loginMessage.textContent = 'Ungültiger Benutzername oder Passwort.';
+    }
+    setTimeout(() => {
+        loginMessage.textContent = '';
+    }, 3000);
+});
+
 
     logoutLink.addEventListener('click', function() {
         setLoggedIn(null);
@@ -202,15 +209,16 @@ document.addEventListener('DOMContentLoaded', () => {
         taskContainer.style.display = 'block';
     }
 
-    function sendEmail(userName, formData) {
-        console.log(`Email to ${currentUser.email}:\nHallo ${userName},\n\nHerzlichen Glückwunsch! Du hast das Quiz erfolgreich bestanden.`);
-    }
-
-    (function initialize() {
-        const storedUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (storedUser) {
-            setLoggedIn(storedUser);
+function initialize() {
+    const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (storedUser) {
+        if (users[storedUser.username] && users[storedUser.username].password === storedUser.password) {
+            setLoggedIn(users[storedUser.username]);
+        } else {
+            setLoggedIn(null);
         }
-        updateLoginState();
-    })();
+    }
+    updateLoginState();
+}
+)();
 });
