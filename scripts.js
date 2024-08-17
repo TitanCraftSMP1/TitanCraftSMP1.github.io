@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const users = {
         'Jannis': { password: 'adminpass1', role: 'admin', email: '' },
         'Jürgen': { password: 'adminpass2', role: 'admin', email: 'phrugu18@gmail.com' },
-        'Fuchsi': { password: Ichmagfuechse', role: 'admin', email: '' },
+        'Fuchsi': { password: 'Ichmagfuechse', role: 'admin', email: '' },
+        'Orange': { password: 'Orangensindcool', role: 'admin', email: '' },
+
         'Bacon': { password: 'modpass', role: 'moderator', email: '' },
-        'Javier': { password: 'ichmagdöner12', role: 'tsupporter', email: '' },
-        'Felix': { password: 'tsupportpass2', role: 'tsupporter', email: '' },
         'Winterstream': { password: 'socialpass', role: 'socialmedia', email: '' },
         'Leo': { password: 'builderpass', role: 'builder', email: '' }
     };
