@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Jürgen': { password: 'adminpass2', role: 'admin', email: 'phrugu18@gmail.com' },
         'Fuchsi': { password: 'Ichmagfuechse', role: 'admin', email: '' },
         'Orange': { password: 'Orangensindcool', role: 'admin', email: '' },
-
         'Bacon': { password: 'modpass', role: 'moderator', email: '' },
         'Winterstream': { password: 'socialpass', role: 'socialmedia', email: '' },
         'Leo': { password: 'builderpass', role: 'builder', email: '' }
